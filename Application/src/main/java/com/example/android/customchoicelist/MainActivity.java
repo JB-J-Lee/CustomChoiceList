@@ -76,8 +76,17 @@ public class MainActivity extends ListActivity {
 
         Intent intent = new Intent(MainActivity.this, NewAppWidget.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
+        /** TODO JB
+         * Update data using SharedPreferences rather than Intent.
+         * If you pass it to memory, you can not cope with the problem of booting.
+         * */
         intent.putExtra(Cheeses.EXTRA, Cheeses.CHEESES[position]);
 
+        /** TODO JB
+         * It is necessary to update AppWidget with Intent.
+         * SharedPreferences are not required.
+         * */
         int[] widgetIds = AppWidgetManager.getInstance(this).getAppWidgetIds(new ComponentName(this, NewAppWidget.class));
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
 

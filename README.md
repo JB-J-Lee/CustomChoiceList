@@ -2,8 +2,8 @@
 Android CustomChoiceList Sample
 ===================================
 
-This sample demonstrates how to create custom checkable layouts, for use with ListView's choiceMode
-attribute.
+This sample demonstrates how to create custom checkable layouts, for use with ListView's choiceMode attribute.
++ ADD AppWidgetProvider by JB.
 
 Introduction
 ------------
@@ -41,32 +41,9 @@ guidelines. When doing so, you should set the `android:scrollbarStyle` attribute
 Pre-requisites
 --------------
 
-- Android SDK 26
-- Android Build Tools v26.0.1
+- Android SDK 27
+- Android Build Tools v27.0.3
 - Android Support Repository
-
-Screenshots
--------------
-
-<img src="screenshots/1-main.png" height="400" alt="Screenshot"/> <img src="screenshots/2-settings.png" height="400" alt="Screenshot"/> 
-
-Getting Started
----------------
-
-This sample uses the Gradle build system. To build this project, use the
-"gradlew build" command or use "Import Project" in Android Studio.
-
-Support
--------
-
-- Google+ Community: https://plus.google.com/communities/105153134372062985968
-- Stack Overflow: http://stackoverflow.com/questions/tagged/android
-
-If you've found an error in this sample, please file an issue:
-https://github.com/googlesamples/android-CustomChoiceList
-
-Patches are encouraged, and may be submitted by forking this project and
-submitting a pull request through GitHub. Please see CONTRIBUTING.md for more details.
 
 License
 -------

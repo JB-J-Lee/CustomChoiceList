@@ -25,13 +25,15 @@ public class NewAppWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
 
-        {
-            Intent intent = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            views.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent);
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent);
 
-            views.setTextViewText(R.id.appwidget_text, "[" + appWidgetId + "]" + (TextUtils.isEmpty(str) ? "" : " " + str));
-        }
+        /** TODO JB
+         * Update data using SharedPreferences rather than Intent.
+         * If you pass it to memory, you can not cope with the problem of booting.
+         * */
+        views.setTextViewText(R.id.appwidget_text, "[" + appWidgetId + "]" + (TextUtils.isEmpty(str) ? "" : " " + str));
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -71,21 +73,29 @@ public class NewAppWidget extends AppWidgetProvider {
         Log.e(TAG, "[onRestored] ");
     }
 
+    /** TODO JB
+     * Update data using SharedPreferences rather than Intent.
+     * The parent class AppWidgetProvider's onReceive does not handle the intent and inherits it.
+     * */
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
+
             Bundle extras = intent.getExtras();
-            if (extras != null) {
-                int[] appWidgetIds = extras.getIntArray(AppWidgetManager.EXTRA_APPWIDGET_IDS);
-                if (appWidgetIds != null && appWidgetIds.length > 0) {
-                    String str = extras.getString(Cheeses.EXTRA, Cheeses.EXTRA);
-                    if (TextUtils.isEmpty(str)) {
-                        onUpdate(context, AppWidgetManager.getInstance(context), appWidgetIds);
-                    } else {
-                        for (int appWidgetId : appWidgetIds) {
-                            updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, str);
-                        }
+            if (extras == null) {
+                return;
+            }
+
+            int[] appWidgetIds = extras.getIntArray(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+            if (appWidgetIds != null && appWidgetIds.length > 0) {
+
+                String str = extras.getString(Cheeses.EXTRA, Cheeses.EXTRA);
+                if (TextUtils.isEmpty(str)) {
+                    onUpdate(context, AppWidgetManager.getInstance(context), appWidgetIds);
+                } else {
+                    for (int appWidgetId : appWidgetIds) {
+                        updateAppWidget(context, AppWidgetManager.getInstance(context), appWidgetId, str);
                     }
                 }
             }
@@ -93,4 +103,3 @@ public class NewAppWidget extends AppWidgetProvider {
             super.onReceive(context, intent);
     }
 }
-
